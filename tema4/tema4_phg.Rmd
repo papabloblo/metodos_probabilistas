@@ -1,0 +1,153 @@
+---
+title: "Tema 4. Análisis de decisiones"
+author: "Pablo Hidalgo García"
+output: 
+  html_notebook:
+      toc: true
+---
+
+
+# Ejercicio 4.1
+
+## 
+
+Las probabilidades que definen el digrama de influencia son:
+
+- $P(a)$
+- $P(b|a)$
+- $P(c|a)$
+- $P(e|b, c)$
+- $P(f|a: d_0)$
+- $P(g|a, f)$
+- $P(h|g)$
+- $P(i|g:d_1)$
+- $P(j:d_2)$
+
+Y se tiene que
+
+$$
+\begin{split}
+P(v_C:v_D) =& \prod_{C\in v_C}P(c|pa(C)) \\
+=& P(a)\cdot P(b|a) \cdot P(c|a) \cdot P(e|b, c)\cdot  \\
+& P(f|a: d_0) \cdot P(g|a, f) \cdot P(g|a, f) \cdot \\
+& P(h|g) \cdot P(i|g:d_1) \cdot P(j:d_2)
+\end{split}
+$$
+
+
+## 
+
+En el caso del diagrama de influencia de la figura, se aprecian 3 decisiones $\{D_0, D_1, D_2}$ que se corresponde con los 4 subconjuntos $\{C_0, C_1, C_2, C_3\}$ de forma que
+
+- $C_0 = \{ B, C, E\}$
+- $C_1  = \{ F\}$
+- $C_2 = \{ I, H\}$
+- $C_3 = \{ A, G, J\}$
+
+## 
+
+Podemos obtener los predecesores informativos de la siguiente forma:
+
+- $PredInf(D_0) = C_0 = \{B, C, E\}$
+- $PredInf(D_1) = C_1 \cup PredInf(D_0) = \{B, C, E, F\}$
+- $PredInf(D_2) = C_2 \cup PredInf(D_1) = \{B, C, E, F, I, H \}$
+
+# Ejercicio 4.2
+
+Por la ecuación 4.8 del libro de texto se tiene que la utilidad esperada $UE$ se puede calcular como
+
+$$
+\begin{split}
+UE =& \sum_{c_0}\underset{d_0}{max}\ldots\sum_{c_{n-1}}\underset{d_{n-1}}{max}\sum_{c_n} P(v_C:v_D)\psi(v_C, v_D)\\
+=& \underset{t}{max}\sum_{y}\underset{d}{max}\sum_{x}P(x)\cdot P(y|x:t)\cdot U(x, t, d)
+\end{split}
+$$
+
+Comenzamos eliminando la variable $X$ obteniendo como potencial
+
+$$
+\psi(y, t, d) = \sum_{x}P(x)\cdot P(y|x:t)\cdot U(x, t, d)
+$$
+
+por lo que llegamos a que
+
+$$
+\begin{split}
+UE =& \underset{t}{max}\sum_{y}\underset{d}{max}\, \psi(y, t, d)
+\end{split}
+$$
+
+Eliminadno ahora la variable $D$, lo que nos lleva a obtener el siguiente potencial
+
+$$
+\psi(y, t) = \underset{d}{max}\, \psi(y, t, d)
+$$
+
+y la utilidad queda como
+
+$$
+UE = \underset{t}{max}\sum_{y} \psi(y, t)
+$$
+
+Una vez mostrado cómo eliminar los potenciales, vamos a calcular sus valores numéricos con los datos proporcionados en el ejemplo 4.
+
+El primer potencial que tenemos es $\psi(y, t, d)$ que podemos calcular de la siguiente forma
+
+$$
+\begin{split}
+\psi(+y, +t, +d) &= P(+x)\cdot P(+y|+x:+t)\cdot U(+x, +t, +d) + P(\neg x)\cdot P(+y|\neg x:+t)\cdot U(\neg x, +t, +d) \\
+&= 0,07 \cdot 0,91 \cdot 78 + 0,93 \cdot 0,03 \cdot 88 = 7,4238
+\end{split}
+$$
+$$
+\begin{split}
+\psi(\neg y, +t, +d) &= P(+x)\cdot P(\neg y|+x:+t)\cdot U(+x, +t, +d) + P(\neg x)\cdot P(\neg y|\neg x:+t)\cdot U(\neg x, +t, +d) \\
+&= 0,07 \cdot 0,09 \cdot 78 + 0,93 \cdot 0,97  \cdot 88 = 79,8762
+\end{split}
+$$
+
+$$
+\begin{split}
+\psi(+y, \neg t, +d) &= P(+x)\cdot P(+y|+x:\neg t)\cdot U(+x, \neg t, +d) + P(\neg x)\cdot P(+y|\neg x:\neg t)\cdot U(\neg x, \neg t, +d) \\
+&= 0,07 \cdot 0 \cdot 80 + 0,93 \cdot 0 \cdot 90  = 0
+\end{split}
+$$
+
+$$
+\begin{split}
+\psi(+ y, +t, \neg d) &= P(+x)\cdot P(+ y|+x:+t)\cdot U(+x, +t, \neg d) + P(\neg x)\cdot P(+ y|\neg x:+t)\cdot U(\neg x, +t, \neg d) \\
+&= 0,07 \cdot 0,91  \cdot 28  + 0,93 \cdot  0,03 \cdot  98 = 1,928542
+\end{split}
+$$
+
+$$
+\begin{split}
+\psi(\neg y, +t, \neg d) &= P(+x)\cdot P(\neg y|+x:+t)\cdot U(+x, +t, \neg d) + P(\neg x)\cdot P(\neg y|\neg x:+t)\cdot U(\neg x, +t, \neg d) \\
+&= 0,07 \cdot 0,09 \cdot 28 + 0,93 \cdot 0,97  \cdot  98 = 88,5822
+\end{split}
+$$
+
+$$
+\begin{split}
+\psi(\neg y,  \neg t, + d) &= P(+x)\cdot P(\neg y|+x:\neg t)\cdot U(+x, \neg t, + d) + P(\neg x)\cdot P(\neg y|\neg x:\neg t)\cdot U(\neg x, \neg t, + d) \\
+&= 0,07 \cdot 0 \cdot 80 + 0,93 \cdot 0 \cdot 90  = 0
+\end{split}
+$$
+
+$$
+\begin{split}
+\psi(\neg y, +t, \neg d) &= P(+x)\cdot P(\neg y|+x:+t)\cdot U(+x, +t, \neg d) + P(\neg x)\cdot P(\neg y|\neg x:+t)\cdot U(\neg x, +t, \neg d) \\
+&= 0,07 \cdot 0,09 \cdot 28 + 0,93 \cdot 0,97  \cdot  98 = 88,5822
+\end{split}
+$$
+
+$$
+\begin{split}
+\psi(\neg y,  \neg t, \neg d) &= P(+x)\cdot P(\neg y|+x:\neg t)\cdot U(+x, \neg t, \neg d) + P(\neg x)\cdot P(\neg y|\neg x:\neg t)\cdot U(\neg x, \neg t, \neg d) \\
+&= 0,07 \cdot 0 \cdot 28 + 0,93 \cdot 0 \cdot 100  = 0
+\end{split}
+$$
+
+
+
+
