@@ -54,6 +54,8 @@ Podemos obtener los predecesores informativos de la siguiente forma:
 
 # Ejercicio 4.2
 
+## Eliminación de variables sin divisiones
+
 Por la ecuación 4.8 del libro de texto se tiene que la utilidad esperada $UE$ se puede calcular como
 
 $$
@@ -77,7 +79,7 @@ UE =& \underset{t}{max}\sum_{y}\underset{d}{max}\, \psi(y, t, d)
 \end{split}
 $$
 
-Eliminadno ahora la variable $D$, lo que nos lleva a obtener el siguiente potencial
+Eliminando ahora la variable $D$, lo que nos lleva a obtener el siguiente potencial
 
 $$
 \psi(y, t) = \underset{d}{max}\, \psi(y, t, d)
@@ -119,6 +121,13 @@ $$
 &= 0,07 \cdot 0,91  \cdot 28  + 0,93 \cdot  0,03 \cdot  98 = 1,928542
 \end{split}
 $$
+$$
+\begin{split}
+\psi(+ y,  \neg t, \neg d) &= P(+x)\cdot P(+ y|+x:\neg t)\cdot U(+x, \neg t, \neg d) + P(\neg x)\cdot P(+ y|\neg x:\neg t)\cdot U(\neg x, \neg t, \neg d) \\
+&= 0,07 \cdot 0 \cdot 28 + 0,93 \cdot 0 \cdot 100  = 0
+\end{split}
+$$
+
 
 $$
 \begin{split}
@@ -148,6 +157,687 @@ $$
 \end{split}
 $$
 
+Ahora calculemos el valor del segundo potencial obtenido $\psi(y, t) = \underset{d}{max}\, \psi(y, t, d)$:
+
+$$
+\psi(+y, +t) = max\,\{ \psi(+y, +t, +d), \, \psi(+y, +t, \neg d) \} = max\{ 7,4238, \, 1,9285424\} = 7,4238
+$$
+
+$$
+\psi(\neg y, +t) = max\,\{ \psi(\neg y, +t, +d), \, \psi(\neg y, +t, \neg d) \} = max\{ 79,8762, \, 88,5822\} = 88,5822
+$$
+$$
+\psi(+y, \neg t) = max\,\{ \psi(+y, \neg t, +d), \, \psi(+y, \neg t, \neg d) \} = max\{ 0, \, 0\} = 0
+$$
+
+$$
+\psi(\neg y, \neg t) = max\,\{ \psi(\neg y, \neg t, +d), \, \psi(\neg y, \neg t, \neg d) \} = max\{ 0, \, 0\} = 0
+$$
+
+Ya estamos en condiciones de calcular la **Utilidad esperada**:
+
+$$
+\sum_{y} \psi(y, + t) = \psi(+y, + t) + \psi(\neg y, + t) = 7,4238 + 88,5822 = 96,006
+$$
+$$
+\sum_{y} \psi(y, \neg t) = \psi(+y, \neg t) + \psi(\neg y, \neg t) = 0  + 0 = 0
+$$
+
+
+$$
+UE = \underset{t}{max}\sum_{y} \psi(y, t) = max\{96,006, \, 0 \} = 96,006
+$$
+
+## Eliminación de variables con divisiones
+
+La utilidad esperada es
+
+$$
+\begin{split}
+UE =& \underset{t}{max}\sum_{y}\underset{d}{max}\sum_{x}P(x)\cdot P(y|x:t)\cdot U(x, t, d)
+\end{split}
+$$
+
+Sacamos solamente aquellos potenciales de probabilidad que dependan de la variable aleatoria $X$ obteniendo 
+$$
+\psi_1(x, y:t) = P(x)\cdot P(y|x:t)
+$$
+
+cuyos valores numéricos son
+
+$$
+\psi_1(+x, +y:+t) = P(+x)\cdot P(+y|+x:+t) = 0,93\cdot   0,91 = 0,8463
+$$
+
+$$
+\psi_1(\neg x, +y:+t) = P(\neg x)\cdot P(+y|\neg x:+t) = 0,07 \cdot 0,03 = 0,0021
+$$
+$$
+\psi_1(+x, \neg y:+t) = P(+x)\cdot P(\neg y|+x:+t) = 0,93\cdot   0,09 = 0,0837
+$$
+
+$$
+\psi_1(+x, +y:\neg t) = P(+x)\cdot P(+y|+x:\neg t) = 0,93\cdot 0 = 0
+$$
+$$
+\psi_1(+x, \neg y:\neg t) = P(+x)\cdot P(\neg y|+x:\neg t) = 0,93\cdot  0 = 0
+$$
+
+$$
+\psi_1(\neg x, + y:\neg t) = P(\neg x)\cdot P(+ y|\neg x:\neg t) = 0,07 \cdot  0 = 0
+$$
+$$
+\psi_1(\neg x, \neg y:+ t) = P(\neg x)\cdot P(\neg y|\neg x: + t) = 0,07 \cdot  0,97 = 0,0679
+$$
+$$
+\psi_1(\neg x, \neg y:\neg t) = P(\neg x)\cdot P(\neg y|\neg x: \neg t) = 0,07 \cdot  0 = 0
+$$
+
+Así, tenemos
+
+$$
+\psi_1(y:t) = \sum_x \psi_1(x, y:t) = \sum_x P(x)\cdot P(y|x:t)
+$$
+cuyos valores numéricos son
+
+$$
+\psi_1(+y:+t) = \psi_1(+x, +y:+t) + \psi_1(\neg x, +y:+t) = 0,8463 + 0,0021 = 0,8484
+$$
+
+$$
+\psi_1(\neg y:+t) = \psi_1(+x, \neg y:+t) + \psi_1(\neg x, \neg y:+t) = 0,0837 + 0,0679 = 0.1516
+$$
+
+$$
+\psi_1(+y:\neg t) = \psi_1(+x, +y:\neg t) + \psi_1(\neg x, +y:\neg t) = 0 + 0 = 0
+$$
+
+$$
+\psi_1(\neg y:\neg t) = \psi_1(+x, \neg y:\neg t) + \psi_1(\neg x, \neg y:\neg t) = 0 + 0 = 0
+$$
+
+Ahora, mediante división de potenciales, podremos obtener los valores de $P(x|y:t)$
+
+$$
+P(x|y:t) = \frac{\psi_1(x, y : t)}{\psi_1(y : t)}
+$$
+cuyos valores numéricos son
+
+$$
+P(+x|+y:+t) = \frac{\psi_1(+x,+ y : +t)}{\psi_1(+y : +t)} = \frac{0,8463}{0,8484} = 0,9975248
+$$
+
+$$
+P(\neg x|+y:+t) = 1 - P(+x|+y:+t) = 1 - 0,9975248 = 0,002475248
+$$
+
+$$
+P(+x|\neg y:+t) = \frac{\psi_1(+x,\neg  y : +t)}{\psi_1(\neg y : +t)} = \frac{0,0837}{0,1516} = 0,5521108
+$$
+
+$$
+P(\neg x|\neg y:+t) = 1 - P(+x|\neg y:+t) = 1 - 0,5521108 = 0,4478892
+$$
+$$
+P(+x|+y:\neg t) = 0
+$$
+$$
+P(\neg x|+y:\neg t)  = 0
+$$
+
+$$
+P(+x|\neg y:\neg t)  = 0
+$$
+
+$$
+P(\neg x|\neg y:\neg t) =  0
+$$
+
+El problema se ha transformado en
+
+$$
+\begin{split}
+UE &= \underset{t}{max}\sum_y\underset{d}{max} P(y:t)\sum_x P(x|y:t) \cdot U_0(x,d,t) \\
+&= \underset{t}{max}\sum_y\underset{d}{max}P(y:t) \cdot U(y,d,t)
+\end{split}
+$$
+Calculemos los valores numéricos de $U(y,d,t) = \sum_x P(x|y:t) \cdot U_0(x,d,t)$
+
+$$
+\begin{split}
+U(+y,+d,+t) &= P(+x|+y:+t) \cdot U_0(+x,+d,+t) + P(\neg x|+y:+t) \cdot U_0(\neg x,+d,+t) \\
+&= 0,9975248 \cdot 78 + 0,002475248 \cdot 88 = 78,02476
+\end{split}
+$$
+
+$$
+\begin{split}
+U(\neg y,+d,+t) &= P(+x|\neg y:+t) \cdot U_0(+x,+d,+t) + P(\neg x|\neg y:+t) \cdot U_0(\neg x,+d,+t) \\
+&= 0,5521108 \cdot 78  + 0,4478892 \cdot 88 = 82,47895
+\end{split}
+$$
+$$
+\begin{split}
+U(+y,\neg d,+t) &= P(+x|+y:+t) \cdot U_0(+x,\neg d,+t) + P(\neg x|+y:+t) \cdot U_0(\neg x,\neg d,+t) \\
+&= 0,9975248 \cdot 28 + 0,002475248 \cdot 98 = 28,17327
+\end{split}
+$$
+
+$$
+\begin{split}
+U(+y,+d,\neg t) &= P(+x|+y:\neg t) \cdot U_0(+x,+d,\neg t) + P(\neg x|+y:\neg t) \cdot U_0(\neg x,+d,\neg t) \\
+&=  0 \cdot  80 + 0 \cdot 90 = 0
+\end{split}
+$$
+
+$$
+\begin{split}
+U(+y,\neg d,\neg t) &= P(+x|\neg y:\neg t) \cdot U_0(+x,\neg d,\neg t) + P(\neg x|\neg y:\neg t) \cdot U_0(\neg x,\neg d,\neg t) \\
+&=  0
+\end{split}
+$$
+
+$$
+\begin{split}
+U(\neg y,+d,\neg t) &= P(+x|\neg y:\neg t) \cdot U_0(+x,+d,\neg t) + P(\neg x|\neg y:\neg t) \cdot U_0(\neg x,+d,\neg t) \\
+&=  0
+\end{split}
+$$
+$$
+\begin{split}
+U(\neg y,\neg d,+t) &= P(+x|\neg y:+t) \cdot U_0(+x,\neg d,+t) + P(\neg x|\neg y:+t) \cdot U_0(\neg x,\neg d,+t) \\
+&= 0,5521108 \cdot 28 + 0,4478892 \cdot 98 = 59,35224
+\end{split}
+$$
+
+$$
+\begin{split}
+U(\neg y,\neg d,\neg t) &= P(+x|\neg y:\neg t) \cdot U_0(+x,\neg d,\neg t) + P(\neg x|\neg y:\neg t) \cdot U_0(\neg x,\neg d,\neg t) \\
+&= 0
+\end{split}
+$$
+Ahora, para eliminar $D$
+$$
+UE = \underset{t}{max}\sum_yP(y:t)\underset{d}{max}U(y,d,t) = \underset{t}{max}\sum_yP(y:t)\cdot U(y,t)
+$$
+
+Los valores numéricos de $U(y, t)$
+
+$$
+U(+y, +t) = \underset{d}{max}\, U(+y,d,+t) = \{78,02476, \, 28,17327} = 78,02476
+$$
+
+$$
+U(\neg y, +t) = \underset{d}{max}\, U(\neg y,d,+t) = \{82,47895, \, 59,35224 \} = 82,47895
+$$
+
+$$
+U(+ y, \neg t) = \underset{d}{max}\, U(+ y,d,\neg t) = \{0, \,  0\} = 0
+$$
+$$
+U(\neg y, \neg t) = \underset{d}{max}\, U(\neg y,d,\neg t) = \{0, \,  0\} = 0
+$$
+
+Definiendo $U(t) = \sum_yP(y:t)\cdot U(y,t)$ cuyos valores numéricos son
+
+$$
+U(+t) = P(+y:+t)\cdot U(+y,+t) + P(\neg y:+t)\cdot U(\neg y,+t) = 0,8484 \cdot 78,02476 + 0,1516 \cdot 82,47895 = 78,70002
+$$
+
+$$
+U(\neg t) = P(+y:\neg t)\cdot U(+y,\neg t) + P(\neg y:\neg t)\cdot U(\neg y,\neg t) = 0
+$$
+
+Y la **utilidad esperada** es por tanto
+$$
+UE = \underset{t}{max}U(t) = max\, \{78,70002, 0\} = 72,70002
+$$
+
+## Inversión de arcos
+
+En el ejemplo 4.13 del libro de texto se muestra en detalle el método de resolución mediante inversión de arcos. En el caso del problema propuesto **los cálculos a realizar son idénticos a los hechos en el método de eliminación de variables con divisiones**.
+
+# Ejercicio 4.3
+
+Tenemos que la utilidad esperada es
+
+$$
+\begin{split}
+UE =& \sum_{c_0}\underset{d_0}{max}\ldots\sum_{c_{n-1}}\underset{d_{n-1}}{max}\sum_{c_n} P(v_C:v_D)\psi(v_C, v_D)\\
+=&  \sum_s\underset{b}{max}\sum_{r}\underset{q}{max}\sum_{t} P(t)\cdot P(s|t)\cdot P(r|t:b) U( t,b,q)
+\end{split}
+$$
+
+## Eliminación de variables sin divisiones
+
+Comenzamos eliminando los potenciales que dependen de $T$ siendo
+
+$$
+\psi(s, r, b, q) = \sum_{t} P(t)\cdot P(s|t)\cdot P(r|t:b) U(t,b,q)
+$$
+
+El problema se ha transformado como
+$$
+UE = \sum_s\underset{b}{max}\sum_{r}\underset{q}{max}\, \psi(s, r, b, q)
+$$
+
+A continuación eliminamos la variable $Q$:, obteniendo
+
+$$
+\psi(s,r,b) = \underset{q}{max}\, \psi(s, r, b, q)
+$$
+Llegamos a que
+
+$$
+UE = \sum_s\underset{b}{max}\sum_{r}\psi(s,r,b)
+$$
+
+Se continua eliminando $R$
+
+$$
+\psi(s,b) = \sum_{r}\psi(s,r,b)
+$$
+con la función de utilidad 
+
+$$
+UE = \sum_s\underset{b}{max}\, \psi(s,b)
+$$
+
+Ahora toca el turno de la variable $B$
+
+$$
+\psi(s) = \underset{b}{max}\, \psi(s,b)
+$$
+
+para llegar a
+
+$$
+UE = \sum_s\psi(s)
+$$
+
+siendo el último paso el de eliminar $S$ por marginalización.
+
+## Eliminación de variables con divisiones
+
+$$
+\begin{split}
+UE 
+=&  \sum_s\underset{b}{max}\sum_{r}\underset{q}{max}\sum_{t} P(t)\cdot P(s|t)\cdot P(r|t:b) U( t,b,q)
+\end{split}
+$$
+
+Comenzamos eliminando la variable $T$
+
+$$
+\psi(t, s, r:b) =  P(t)\cdot P(s|t)\cdot P(r|t:b)
+$$
+
+Por marginalización podemos obtener $\psi(s, r:b) = \sum_t \psi(t, s, r:b)$ y 
+
+$$
+P(t|s,r:b) = \frac{\psi(t, s, r:b)}{\psi(s, r:b)}
+$$
+
+luego
+
+$$
+\begin{split}
+UE 
+=&  \sum_s\underset{b}{max}\sum_{r}\underset{q}{max}P(s,r:b)\sum_{t} P(t|s,r:b) \cdot U( t,b,q)\\
+=&  \sum_s\underset{b}{max}\sum_{r}\underset{q}{max}P(s,r:b)\cdot U(s, r, b,q)\\
+\end{split}
+$$
+
+Para eliminar $Q$ 
+
+$$
+\begin{split}
+UE =&  \sum_s\underset{b}{max}\sum_{r}P(s,r:b)\underset{q}{max}\, U(s, r, b,q)\\
+=&  \sum_s\underset{b}{max}\sum_{r}P(s,r:b)\cdot U(s,r,b)\\
+\end{split}
+$$
+
+Continuamos con la variable $R$
+
+$$
+\begin{split}
+UE =&  \sum_s\underset{b}{max}\sum_{r}P(s,r:b)\cdot U(s,r,b)\\
+\end{split}
+$$
+Al tener solo un potencial que dependa de $R$,simplemente multiplicamos ese potencia por el de utilidad
+
+$$
+\begin{split}
+UE =&  \sum_s\underset{b}{max}\,U(s,b)\\
+\end{split}
+$$
+Llegando, por último, a
+
+$$
+\begin{split}
+UE =&  \sum_s\, U(s)\\
+\end{split}
+$$
+
+
+# Ejercicio 4.4
+
+Contamos con **dos variables aleatorias**: 
+
+- $C$ que expresaremos como $+c$ en el caso de que el sujeto tenga cáncer y $\neg c$ en caso contrario. Podemos expresar sus probabilidades como
+    - $P(+c) = 0.05$.
+    - $P(\neg c) = 0.95$
+- $P$ tomando $+p$ si el resultado de la prueba es positivo indicando que el sujeto tiene cáncer, frente a $\neg p$ si el resultado de la prueba es negativo. Las probabilidades asociadas a esta variable se pueden expresar de la siguiente forma teniendo en cuenta que la prueba tiene una sensibilidad del $90\%$ y una especificidad del $97\%$
+    - $P(+p|+c)  = 0.8$
+    - $P(+p|\neg c) = 0.03$
+    - $P(\neg p| +c) = 0.2$
+    - $P(\neg p| \neg c) = 0.97$
+    
+En este caso solo tenemos **una variable de decisión** $Q$ que se corresponde con $+q$ en el caso de decidir someter al sujeto a un tratamiento de quimioterapia y $\neg q$ en el caso de no aplicarle el tratamiento.
+
+Para el problema dado vamos a definir la utilidad como la multiplicación entre la esperanza de vida y la calidad de vida denominada *AVAC*. Además, sabemos que la realización de la prueba diagnóstica conlleva un coste de $0.001$ AVAC. Por tanto, podemos expresar la utilidad $U$ como:
+
+- $U(+t, +c, +q) = 7 \cdot 0.8 - 0.001 = 5.599$
+
+- $U(+t, +c, \neg q) = 0.25 \cdot 0.4 - 0.001 = 0.099$
+- $U(+t, \neg c, +q) = 0.8 + 0.9 \cdot 9 - 0.001 = 8.899$
+- $U(\neg t, +c, +q) = 7 \cdot 0.8 = 5.6$
+
+- $U(+t, \neg c, \neg q) = 10 \cdot 0.9 - 0.001 = 8.999$
+- $U(\neg t, +c, \neg q) = 0.25 \cdot 0.4 = 0.1$
+- $U(\neg t, \neg c, +q) = 0.8 + 0.9 \cdot 9 = 8.9$
+
+- $U(\neg t, \neg c, \neg q) = 0.9 \cdot 10 = 9$
+
+
+Por la construcción del árbol, necesitamos conocer el valor de la probabilidad de $P$ que, por el teorema de la probabilidad total:
+
+$$
+P(+p) = P(+p|+c) \cdot P(+c) + P(+p|\neg c) \cdot P(\neg c) = 0.8 \cdot 0.05 + 0.03 \cdot 0.95 = 0.0685
+$$
+
+$$
+P(\neg p) = 1 -  P(+p) = 0.9885
+$$
+los siguientes cálculos mediante el teorema de Bayes
+
+- $P(+c|+p) = \frac{P(+c) \cdot P(+p|+c)}{P(+p)} = \frac{0.05 \cdot 0.8}{0.0685} = 0.5839416$
+- $P(\neg c|+p) = 1 - P(+c|+p) = 0.4160584$
+- $P(+c|\neg p) = \frac{P(+c) \cdot P(\neg p|+c)}{P(\neg p)} = \frac{0.05 \cdot 0.2}{0.9885} = 0.01011634$
+- $P(\neg c|\neg p) = 1 -P(+c|\neg p) = 0.9898837$
+
+Comenzamos con la rama $(+t , +p, +q)$ cuya utilidad será
+
+$$
+U(+q|+p) = U(+t, +c, +q) \cdot P(+c|+p) + U(+t, \neg c, +q) \cdot P(\neg c|+p) = 5.599\cdot  0.5839416 + 8.899 \cdot 0.4160584 = 6.971993
+$$
+Y, para $(+t , +p, +q)$ obtenemos
+
+$$
+U(\neg q|+p) = U(+t, +c, \neg q) \cdot P(+c|+p) + U(+t, \neg c, \neg q) \cdot P(\neg c|+p) = 0.099\cdot  0.5839416 + 8.999 \cdot 0.4160584 = 3.80192
+$$
+
+Así, llegamos a que
+$$
+U(+t, +p) = max\{U(+q|+p), U(\neg q|+p)\} = 6.971993
+$$
+Obteniendo, además, que la decisión óptima para $(+t, +p)$ es $+q$, es decir, en caso de que la prueba sea realizada ($+t$) y esta de como resultado positivo ($+p$) la mejor política de actuación es someter a quimioterapia al sujeto.
+
+Realizamos los mismos cálculos pero esta vez para la rama $(+t,  \neg p)$
+
+$$
+U(+q|\neg p, +t) = U(+t, +c, +q) \cdot P(+c|\neg p) + U(+t, \neg c, +q) \cdot P(\neg c|\neg p) = 5.599\cdot  0.01011634 + 8.899 \cdot 0.9898837  = 8.865616
+$$
+Y, para $(+t , +p, +q)$ obtenemos
+
+$$
+U(\neg q|\neg p) = U(+t, +c, \neg q) \cdot P(+c|\neg p) + U(+t, \neg c, \neg q) \cdot P(\neg c|\neg p) = 0.099\cdot  0.01011634 + 8.999 \cdot 0.9898837 = 8.908965
+$$
+
+Llegando a que 
+
+$$
+U(+t, \neg p) = max\{U(+q|\neg p), U(\neg q|\neg p)\} = 8.908965
+$$
+
+siendo, en este caso, la política óptima para $(+t, \neg q)$ ññegar a $\neg q$, es decir, en caso de realizar la prueba y que esta sea negativa, la política óptima es no someter a quimioterapia al sujeto.
+
+Así, obtenemos que la utilidad de $+t$ es
+
+$$
+U(+t) = U(+ p| +t) \cdot P(+p| +t) + U(\neg p| +t) \cdot P(\neg p| +t) = 6.971993 \cdot 0.0685 + 8.908965 \cdot 0.9885 = 9.284093
+$$
+
+A continuación nos ocupamos de la rama $+t$ para la cual no interviene $P$ ya que estamos suponiendo que **no se realiza la prueba**. 
+
+Para $(\neg t, +q)$ tenemos que
+$$
+U(+q, \neg t) = U(\neg t, +c, +q) \cdot P(+c) + U(\neg t, \neg c, +q) \cdot P(\neg c) = 5.599 \cdot 0.05 + 8.9 \cdot 0.95 = 8.73495 
+$$
+De la misma forma, para $(\neg t, \neg q)$
+
+$$
+U(\neg q, \neg t) = U(\neg t, +c, \neg q) \cdot P(+c) + U(\neg t, \neg c, \neg q) \cdot P(\neg c) = 0.1 \cdot 0.05 + 9 \cdot 0.95 = 8.555 
+$$
+Por tanto, la utilidad de $\neg t$ será
+
+$$
+U(\neg t) = max\{U(+q|\neg t), U(\neg q|\neg t)\} = 8.73495
+$$
+siendo la política óptima en caso de no realizar la prueba ($\neg t$), aplicar quimioterapia.
+
+Así podemos ya obtener la política óptima que será
+
+$$
+U = max\{U(\neg t), U(+ t)\} = max\{9.284093, 8.73495\} = 9.284093
+$$
+
+obtentiendo como resultado que **la mejor decisión sería la de realizar la prueba**.
+
+<!-- En cuanto a la utilidad, tenemos **3 nodos de utilidad**: -->
+
+<!-- - **Calidad de vida** $U_{calidad}$: -->
+<!--     - $U_{calidad}(+c , +q) = 80\%$ -->
+<!--     - $U_{calidad}(+c , \neg q) = 40\%$ -->
+<!--     - $U_{calidad}(\neg c , \neg q) = 90\%$ -->
+<!--     - $$ -->
+<!--     \begin{cases} -->
+<!--     U_{calidad}(\neg c , + q) = 80\%, \mbox{ en el primer año}\\ -->
+<!--     U_{calidad}(\neg c , + q) = 90\%, \mbox{ en el resto de años}\\ -->
+<!--     \end{cases} -->
+<!--     $$ -->
+
+<!-- - **esperanza de vida** $U_{vida}$: -->
+<!--     - $U_{vida}(+c, +q) = 7$ -->
+<!--     - $U_{vida}(+c, \neg q) = 0.4$ -->
+<!--     - $U_{vida}(\neg c, +q) = 10$ -->
+<!--     - $U_{vida}(\neg c, \neg q) = 10$ -->
+<!-- - **AVAC** -->
+
+El grafo resultante del diagrama de influencia se puede ver a continuación:
+
+
+Por supuesto, la resolución del problema tal y como está expuesta en el enunciado solamente sería válida para un sujeto de las características enunciadas, es decir, varón de 76 años. Además, tan solo estamos considerando dos tipos de tratamientos: someter al paciente a quimioterapia o no someterle a ninguna terapia. También, estamos suponiendo que la calidad de vida permanece casi constante cosa que puede no estar sujeta a la realidad ya que es probable que la calidad de vida de un sujeto disminuya conforme vaya cumpliendo años.
+
+# Ejercicio 4.5
+
+Denominemos $R$ a la variable aleatoria que expresa la existencia ($+r$) o no ($\neg r$) del rasgo genético del enunciado. Tendríamos que
+- $P(+r) = 0.2$
+- $P(\neg r) = 0.8$
+
+El enunciado del problema nos dice que el problema a resolver es el mismo que el del problema 4.4 para el que, además la probabilidad de padecer el tipo de cáncer se ve modificada por la presencia o no del rasgo genético anteriormente descrito. Así, las probabilidades de padecer cáncer o no, siguiendo la nomenclatura del ejercicio 4.4 serían
+
+- $P(+c|+r) = 0.15$
+- $P(\neg c|+r) = 0.85$
+- $P(+c|\neg r) = 0.025$
+- $P(\neg c|\neg r) = 0.975$
+
+El resto del problema quedaría igual.
+
+En este caso, el orden de las variables del árbol de decisión sería $T-P-Q-R-C$. En el enunciado del problema se dice que *desde el principio sabemos con certeza si el paciente presenta dicho rasgo genético o no*. Por lo tanto, no es relevante la probabilidad de tener o no el rasgo genético al conocerlo de antemano y podríamos evaluar simplemente el árbol de decisión $T-P-Q-R-C$ suponiendo $(1)$ la variable aleatoria $R$ toma el valor $+r$ y $(2)$ la variable aleatoria $R$ toma valor $\neg r$.
+
+## Caso $(1)$: existencia de rasgo genético
+
+
+Por la construcción del árbol, necesitamos conocer el valor de la probabilidad de $P$ que, por el teorema de la probabilidad total:
+
+$$
+P(+p) = P(+p|+c) \cdot P(+c) + P(+p|\neg c) \cdot P(\neg c) = 0.8 \cdot 0.15 + 0.03 \cdot 0.85 = 0.1455
+$$
+
+$$
+P(\neg p) = 1 -  P(+p) = 0.9055
+$$
+los siguientes cálculos mediante el teorema de Bayes
+
+- $P(+c|+p) = \frac{P(+c) \cdot P(+p|+c)}{P(+p)} = \frac{0.15 \cdot 0.8}{0.1455} = 0.8247423$
+- $P(\neg c|+p) = 1 - P(+c|+p) = 0.1752577$
+- $P(+c|\neg p) = \frac{P(+c) \cdot P(\neg p|+c)}{P(\neg p)} = \frac{0.15 \cdot 0.2}{0.9055} = 0.03313087$
+- $P(\neg c|\neg p) = 1 -P(+c|\neg p) = 0.9668691$
+
+Comencemos por la rama $(+t, +p)$ cuya utilidad esperada sería
+
+$$
+U(+t, +q) = P(+c|+p) \cdot U(+t, +q, +c) + P(\neg c|+p) \cdot U(+t ,+q, \neg c) = 0.8247423 \cdot 5.599 + 0.1752577  \cdot 8.899 = 6.17735
+$$
+
+$$
+U(+t, \neg q) = P(+c|+p) \cdot U(+t, \neg q, +c) + P(\neg c|+p) \cdot U(+t, \neg q, \neg c) = 0.8247423 \cdot 0.099 + 0.1752577  \cdot 8.999 = 1.658794
+$$
+
+Ahora, la utilidad para la rama $(+t, +p)$ sería
+
+$$
+U(+t, +p) = max\{U(+t, +q), U(+t, \neg q)\} = 6.17735
+$$
+
+Obteniendo que, para una persona a la que se le haya realizado la prueba y esta haya salido positiva, lo mejor sería someterla a quimioterapia.
+
+Realizamos los mismos cálculos para $(+t, \neg p)$
+
+$$
+U(+t, +q | \neg p) = P(+c|\neg p) \cdot U(+t, +q, +c) + P(\neg c|\neg p) \cdot U(+t ,+q, \neg c) = 0.03313087 \cdot 5.599 +  0.9668691 \cdot 8.899 = 8.789668
+$$
+
+$$
+U(+t, \neg q | \neg p) = P(+c|\neg p) \cdot U(+t, \neg q, +c) + P(\neg c|\neg p) \cdot U(+t, \neg q, \neg c) = 0.03313087 \cdot 0.099 +  0.9668691 \cdot 8.999 = 8.704135
+$$
+
+Ahora, para la utilidad para la rama $(+t, +p)$ sería
+
+$$
+U(+t, \neg p) = max\{U(+t, +q), U(+t, \neg q)\} = 8.789668
+$$
+
+Luego la forma óptima de actuar para un paciente que se haya sometido a la prueba y esta de negativo sería aplicarle quimioterapia.
+
+Así, ya estamos en condiciones de calcular la utilidad de $+t$:
+
+$$
+U(+t) = 
+$$
+
+Para la rama $\neg t$, igual que en el ejercicio anterior, estamos suponiendo que la prueba no se realiza, por lo que desconocemos el valor de $P$.
+
+La utilidad para $(\neg t, +q)$
+
+$$
+U(\neg t, +q) = P(+c) \cdot U(\neg t, +q, +c) + P(\neg c) \cdot U(\neg t, +q, \neg c) = 0.15 \cdot 5.6 + 0.85 \cdot 9 = 8.49 
+$$
+
+$$
+U(\neg t, \neg q) = P(+c) \cdot U(\neg t, \neg q, +c) + P(\neg c) \cdot U(\neg t, \neg q, \neg c) = 0.15 \cdot 0.1 + 0.85 \cdot 9 = 7.665 
+$$
+Así,
+
+$$
+U(\neg t) = max\{U(\neg t, +q), U(\neg t, \neg q)\} = 8.49
+$$
+Siendo, en caso de no realizar la prueba, la mejor decisión no aplicar quimioterapia.
+
+Por último, podemos obtener la política óptima de actuación 
+
+$$
+U = max\{U(+t), U(\neg t) \} = 8.789668
+$$
+
+que sería la de realizar la prueba a la población.
+
+## Caso $(2)$: no existencia de rasgo genético
+
+Los cálculos son muy similares al caso $(1)$, por lo que omitiremos los detalles.
+
+
+$$
+P(+p) = P(+p|+c) \cdot P(+c) + P(+p|\neg c) \cdot P(\neg c) = 0.8 \cdot 0.025 + 0.03 \cdot 0.975 = 0.04925
+$$
+
+$$
+P(\neg p) = 1 -  P(+p) = 0.95075
+$$
+
+- $P(+c|+p) = \frac{P(+c) \cdot P(+p|+c)}{P(+p)} = \frac{0.025 \cdot 0.8}{0.04925} = 0.4060914$
+- $P(\neg c|+p) = 1 - P(+c|+p) = 0.5939086$
+- $P(+c|\neg p) = \frac{P(+c) \cdot P(\neg p|+c)}{P(\neg p)} = \frac{0.975 \cdot 0.2}{0.9055} = 0.2153506$
+- $P(\neg c|\neg p) = 1 -P(+c|\neg p) = 0.7846494$
 
 
 
+$$
+U(+t, +q) = P(+c|+p) \cdot U(+t, +q, +c) + P(\neg c|+p) \cdot U(+t ,+q, \neg c) = 0.4060914 \cdot 5.599 + 0.5939086  \cdot 8.899 = 7.558898
+$$
+
+$$
+U(+t, \neg q) = P(+c|+p) \cdot U(+t, \neg q, +c) + P(\neg c|+p) \cdot U(+t, \neg q, \neg c) = 0.4060914 \cdot 0.099 + 0.5939086  \cdot 8.999 = 5.384787
+$$
+
+Luego 
+
+$$
+U(+t, +p) = max\{U(+t, +q), U(+t, \neg q)\} = 7.558898
+$$
+Siendo $+q$ la mejor forma de actuar para $(+t, +p)$.
+
+Para la rama $(+t, \neg p)$
+
+$$
+U(+t, +q | \neg p) = P(+c|\neg p) \cdot U(+t, +q, +c) + P(\neg c|\neg p) \cdot U(+t ,+q, \neg c) = 0.2153506 \cdot 5.599 +  0.7846494 \cdot 8.899 = 8.188343
+$$
+
+$$
+U(+t, \neg q | \neg p) = P(+c|\neg p) \cdot U(+t, \neg q, +c) + P(\neg c|\neg p) \cdot U(+t, \neg q, \neg c) = 0.2153506 \cdot 0.7846494 +  0.9668691 \cdot 8.999 = 8.86983
+$$
+
+Y
+
+$$
+U(+t, \neg p) = max\{U(+t, +q), U(+t, \neg q)\} = 8.86983
+$$
+
+Por tanto, la mejor forma de proceder si tenemos $(+t, \neg p)$ es $\neg q$. Y ya podemos calcular la utilidad de $+t$
+
+$$
+U(+t) = U(+t, +p)\cdot P(+p) + U(+t, \neg p)\cdot P(\neg p) = 7.558898 \cdot 0.04925 + 5.384787 \cdot 0.95075 = 5.491862 
+$$
+
+Para la rama $(\neg t, +q)$:
+
+$$
+U(\neg t, +q) = P(+c) \cdot U(\neg t, +q, +c) + P(\neg c) \cdot U(\neg t, +q, \neg c) = 0.025 \cdot 5.6 + 0.975 \cdot 9 = 8.915 
+$$
+
+$$
+U(\neg t, \neg q) = P(+c) \cdot U(\neg t, \neg q, +c) + P(\neg c) \cdot U(\neg t, \neg q, \neg c) = 0.025 \cdot 0.1 + 0.975 \cdot 9 = 8.7775 
+$$
+Así,
+
+$$
+U(\neg t) = max\{U(\neg t, +q), U(\neg t, \neg q)\} = 8.915
+$$
+Siendo, en caso de no realizar la prueba, la mejor decisión aplicar quimioterapia.
+
+Por último, podemos obtener la política óptima de actuación 
+
+$$
+U = max\{U(+t), U(\neg t) \} = 
+$$
